@@ -38,22 +38,7 @@ public class MyApplication extends Application {
             }
         });
 
-        //设置用户信息
-        boolean isCacheUserInfo = true;
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
-            /**
-             * 获取设置用户信息. 通过返回的 userId 来封装生产用户信息.
-             * @param userId 用户 ID
-             */
-            @Override
-            public UserInfo getUserInfo(String userId) {
-                UserInfo userInfo = new UserInfo(userId, "guoguoguo", Uri.parse("http://img.defalt.top/avatar.jpg"));
-                Log.d(TAG, "getUserInfo: userId =" + userId + "name =" + userInfo.getName());
-                return userInfo;
-            }
-
-        }, isCacheUserInfo);
 
 
     }

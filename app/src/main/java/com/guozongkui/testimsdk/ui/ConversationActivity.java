@@ -1,4 +1,4 @@
-package com.guozongkui.testimsdk;
+package com.guozongkui.testimsdk.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -6,7 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import io.rong.imkit.fragment.ConversationFragment;
+import com.guozongkui.testimsdk.R;
+import com.guozongkui.testimsdk.ui.CustomizedConversationFragment;
 
 public class ConversationActivity extends AppCompatActivity {
 
@@ -14,10 +15,11 @@ public class ConversationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        ConversationFragment conversationFragment=new ConversationFragment();
+        CustomizedConversationFragment conversationFragment=new CustomizedConversationFragment();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, conversationFragment);
         transaction.commit();
+
     }
 }
