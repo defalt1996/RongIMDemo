@@ -1,12 +1,8 @@
 package com.guozongkui.testimsdk.model;
 
-import cn.rongcloud.im.common.ErrorCode;
-import cn.rongcloud.im.common.NetConstant;
+import com.guozongkui.testimsdk.common.ErrorCode;
+import com.guozongkui.testimsdk.common.NetConstant;
 
-/**
- * 网络请求结果基础类
- * @param <T> 请求结果的实体类
- */
 public class Result<T> {
     public int code;
     public T result;
@@ -42,3 +38,4 @@ public class Result<T> {
         return ErrorCode.fromCode(code).getMessage();
     }
 }
+

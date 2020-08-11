@@ -1,55 +1,61 @@
 package com.guozongkui.testimsdk.ui;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.guozongkui.testimsdk.R;
-import com.guozongkui.testimsdk.network.HttpService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
+
+
+    FragmentManager mFragmentManager;
+    FragmentTransaction mFragmentTransaction;
+    Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //步骤4:创建Retrofit对象
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.sealtalk.im") // 设置 网络请求 Url
-                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析(记得加入依赖)
-                .build();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
 
-        // 步骤5:创建 网络请求接口 的实例
-        HttpService request = retrofit.create(HttpService.class);
-
-        //对 发送请求 进行封装(设置需要翻译的内容)
-        Call<GetTokenResponse> call = request.("I love you");
-
-        //步骤6:发送网络请求(异步)
-        call.enqueue(new Callback<>() {
+        LoginFragment loginFragment = new LoginFragment();
+        RegisterFragment registerFragment = new RegisterFragment();
+        mFragmentTransaction.add(R.id.fl_main, loginFragment, "loginFragment")
+                .add(R.id.fl_main, registerFragment, "registerFragment")
+                .hide(registerFragment).commit();
 
 
-            @Override
-            public void onResponse(Call<GetTokenResponse> call, Response response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<GetTokenResponse> call, Throwable t) {
-
-            }
-
-        });
-    }
 
 
     }
+
+    public void switchFragment(String fromTag, String toTag) {
+        Fragment from = mFragmentManager.findFragmentByTag(fromTag);
+        Fragment to = mFragmentManager.findFragmentByTag(toTag);
+        if (mCurrentFragment != to) {
+            mCurrentFragment = to;
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            if (!to.isAdded()) {//判断是否被添加到了Activity里面去了
+                transaction.hide(from).add(R.id.fl_main, to).commit();
+            } else {
+                transaction.hide(from).show(to).commit();
+            }
+        }
+
+    }
+
+
+
+
+
 }

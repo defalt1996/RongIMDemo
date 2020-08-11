@@ -10,31 +10,47 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.guozongkui.testimsdk.R;
+import com.guozongkui.testimsdk.model.GroupResult;
+import com.guozongkui.testimsdk.model.RegisterResult;
+import com.guozongkui.testimsdk.model.Result;
+import com.guozongkui.testimsdk.net.RetrofitHelper;
+import com.guozongkui.testimsdk.net.RetrofitUtil;
+import com.guozongkui.testimsdk.net.service.GroupService;
+import com.guozongkui.testimsdk.net.service.UserService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.model.Conversation;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyConversationListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import static io.rong.imkit.fragment.ConversationFragment.TAG;
+
+
 public class MyConversationListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    ImageView btnMainMore;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -65,9 +81,17 @@ public class MyConversationListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        btnMainMore = view.findViewById(R.id.btn_main_more);
+        btnMainMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createNewGroup();
+            }
+        });
 
         initConversationListView();
     }
+
 
     private void initConversationListView() {
         ConversationListFragment conversationListFragment=new ConversationListFragment();
@@ -158,4 +182,35 @@ public class MyConversationListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_conversation_list, container, false);
     }
+
+    private void createNewGroup() {
+
+        GroupService request = RetrofitHelper.getInstance().getRetrofit(getActivity()).create(GroupService.class);
+
+
+        String[] memberList = {"NVNfLeGR7"," enWCs9zgb", "QSImlof2K"};
+
+        final HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("name", "TestGroup123");
+        paramsMap.put("memberIds", memberList);
+        paramsMap.put("portraitUri", "https://s1.ax1x.com/2020/08/11/aqOXPP.jpg");
+
+        RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
+
+        Call<Result<GroupResult>> responseCall = request.createGroup(body);
+
+        responseCall.enqueue(new Callback<Result<GroupResult>>() {
+            @Override
+            public void onResponse(Call<Result<GroupResult>> call, Response<Result<GroupResult>> response) {
+                Log.d(TAG, "onResponse: code :" + response.body().getCode());
+            }
+
+            @Override
+            public void onFailure(Call<Result<GroupResult>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 }

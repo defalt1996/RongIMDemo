@@ -3,7 +3,8 @@ package com.guozongkui.testimsdk.net;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import cn.rongcloud.im.common.NetConstant;
+
+import com.guozongkui.testimsdk.common.NetConstant;
 
 import static android.content.Context.MODE_PRIVATE;
 

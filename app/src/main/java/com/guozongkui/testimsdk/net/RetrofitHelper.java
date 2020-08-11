@@ -2,7 +2,6 @@ package com.guozongkui.testimsdk.net;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.guozongkui.testimsdk.common.NetConstant;
 
@@ -27,32 +26,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RetrofitClient {
-    private Context mContext;
-    private Retrofit mRetrofit;
+public class RetrofitHelper {
 
-    public RetrofitClient(Context context, String baseUrl) {
+
+    private static RetrofitHelper instance;
+    private Context mContext;
+    private Retrofit retrofit;
+
+    private RetrofitHelper() {
+
+    }
+
+    public static RetrofitHelper getInstance() {
+        if (instance == null) {
+            instance = new RetrofitHelper();
+        }
+
+        return instance;
+    }
+
+    public Retrofit getRetrofit(Context context){
+
         mContext = context;
 
-//        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
-//                .addInterceptor(new AddHeaderInterceptor(mContext))
-//                .addInterceptor(new ReceivedCookiesInterceptor(mContext))
-//                .connectTimeout(NetConstant.API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
-//                .readTimeout(NetConstant.API_READ_TIME_OUT, TimeUnit.SECONDS)
-//                .writeTimeout(NetConstant.API_WRITE_TIME_OUT, TimeUnit.SECONDS);
-
-        /*
-         * 当 baseUrl 没有以 "/" 结尾时加入 "/"
-         * 防止当 baseUrl 为非纯域名的，如：域名+ path 时，如果不以 "/" 结尾，Retrofit 会抛出异常
-         */
-        if (!TextUtils.isEmpty(baseUrl)
-                && baseUrl.lastIndexOf("/") != baseUrl.length() - 1)
-        mRetrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .client(getUnsafeOkHttpClient())
-                .baseUrl(baseUrl) //设置网络请求的Url地址
-                .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
-//                .addCallAdapterFactory(new LiveDataCallAdapterFactory()) //设置请求响应适配 LiveData
+                .baseUrl("http://api.sealtalk.im")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        return retrofit;
     }
 
     private OkHttpClient getUnsafeOkHttpClient() {
@@ -82,8 +85,8 @@ public class RetrofitClient {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
-                    .addInterceptor(new AddHeaderInterceptor(mContext))
-                    .addInterceptor(new ReceivedCookiesInterceptor(mContext))
+                    .addInterceptor(new RetrofitHelper.AddHeaderInterceptor(mContext))
+                    .addInterceptor(new RetrofitHelper.ReceivedCookiesInterceptor(mContext))
                     .connectTimeout(NetConstant.API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
                     .readTimeout(NetConstant.API_READ_TIME_OUT, TimeUnit.SECONDS)
                     .writeTimeout(NetConstant.API_WRITE_TIME_OUT, TimeUnit.SECONDS);
@@ -164,7 +167,7 @@ public class RetrofitClient {
         }
     }
 
-    public <T> T createService(Class<T> service) {
-        return mRetrofit.create(service);
-    }
+
+
+
 }
