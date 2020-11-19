@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- 设置已读回执，目前仅支持单聊、群聊、讨论组 -->
+    <bool name="rc_read_receipt">true</bool>
+    <!--是否开启合并转发功能, true 为打开, false 为关闭 -->
+    <bool name="rc_enable_send_combine_message">false</bool>
+
+
+    <!--是否开启 Q 存储空间模式-->
+    <bool name="rc_q_storage_mode_enable">true</bool>
+
+    <!--是否启用阅后即焚插件-->
+    <bool name="rc_open_destruct_plugin">true</bool>
+
+
+</resources>

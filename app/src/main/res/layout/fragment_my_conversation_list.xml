@@ -9,14 +9,14 @@
     <LinearLayout
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="40dp"
         android:gravity="right"
-        android:background="@color/colorPrimary"
+        android:background="@color/rc_draft_color"
         >
         <ImageView
             android:id="@+id/btn_main_more"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/seal_ic_main_more"
             android:layout_gravity="center|right"
             android:layout_marginRight="30dp"

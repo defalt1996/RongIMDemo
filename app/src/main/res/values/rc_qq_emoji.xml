@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="qq_emoji_res">
+        <item>@drawable/em_default_060</item>
+        <item>@drawable/em_default_061</item>
+        <item>@drawable/em_default_062</item>
+        <item>@drawable/em_default_063</item>
+        <item>@drawable/em_default_064</item>
+
+    </array>
+
+    <integer-array name="qq_emoji_code">
+        <item>12138</item>
+        <item>0xc0d1d</item>
+        <item>0x2f333</item>
+        <item>0x2f444</item>
+        <item>0x2f555</item>
+
+    </integer-array>
+
+    <array name="qq_emoji_description">
+        <item>@string/rc_emoji_smiley_face</item><!--1-->
+        <item>@string/rc_emoji_grinning_face</item><!--2-->
+        <item>@string/rc_emoji_smiley</item><!--3-->
+        <item>@string/rc_emoji_cute</item><!--4-->
+        <item>@string/rc_emoji_winking_face</item><!--5-->
+    </array>
+
+
+</resources>

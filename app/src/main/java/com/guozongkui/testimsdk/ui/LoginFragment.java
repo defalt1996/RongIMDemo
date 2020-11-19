@@ -132,6 +132,8 @@ public class LoginFragment extends Fragment {
                 Log.d("Login", "onResponse: IMToken: "+ IMToken + "; id: "+ id);
                 Toast.makeText(getActivity(), "Login successfully!", Toast.LENGTH_SHORT).show();
 
+                RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.Ordinary);
+
                 RongIM.connect(IMToken, new RongIMClient.ConnectCallback() {
                     @Override
                     public void onSuccess(String s) {
