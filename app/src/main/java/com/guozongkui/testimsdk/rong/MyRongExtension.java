@@ -13,6 +13,8 @@ public class MyRongExtension extends RongExtension {
 
     EditText mEditText;
 
+    TextView myCommonPhraseToggle;
+
     public MyRongExtension(Context context) {
         super(context);
         tryAddTextChangedAction();
@@ -20,6 +22,7 @@ public class MyRongExtension extends RongExtension {
 
     public MyRongExtension(Context context, AttributeSet attrs) {
         super(context, attrs);
+
 
         tryAddTextChangedAction();
 

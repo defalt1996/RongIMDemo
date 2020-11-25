@@ -26,9 +26,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".ui.HalfScreen2ndConversationListActivity"></activity>
         <activity android:name=".ui.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -78,8 +80,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.RegisterActivity">
-        </activity>
+        <activity android:name=".ui.RegisterActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -89,21 +90,17 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
-        </provider>
-
-        <!-- push 应用定义消息 receiver 声明 -->
+        </provider> <!-- push 应用定义消息 receiver 声明 -->
         <receiver android:name=".rong.MyVivoPushMessageReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.vivo.pushclient.action.RECEIVE" />
             </intent-filter>
-        </receiver>
-
-        <!-- 高德地图-->
+        </receiver> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e09af6a2b26c02086e9216bd07c960ae" />
-
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ public class DataGenerator {
 
     public static final int []mTabRes = new int[]{R.mipmap.seal_ic_tab_chat,R.mipmap.seal_ic_tab_contacts,R.mipmap.seal_ic_tab_found, R.mipmap.seal_ic_tab_me};
     public static final int []mTabResPressed = new int[]{R.mipmap.seal_ic_tab_chat_hover,R.mipmap.seal_ic_tab_contacts_hover,R.mipmap.seal_ic_tab_found_hover, R.mipmap.seal_ic_tab_me_hover};
-    public static final String []mTabTitle = new String[]{"会话","通讯录","聊天室","我的"};
+    public static final String []mTabTitle = new String[]{"会话","半屏列表","聊天室","我的"};
 
     public static Fragment[] getFragments(String from){
         Fragment fragments[] = new Fragment[4];

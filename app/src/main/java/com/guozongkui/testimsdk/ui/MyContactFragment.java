@@ -1,13 +1,21 @@
 package com.guozongkui.testimsdk.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.guozongkui.testimsdk.R;
+
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,5 +69,35 @@ public class MyContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_contact, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initConversationListView();
+    }
+
+    private void initConversationListView() {
+        ConversationListFragment conversationListFragment=new ConversationListFragment();
+        // 此处设置 Uri. 通过 appendQueryParameter 去设置所要支持的会话类型. 例如
+        // .appendQueryParameter(Conversation.ConiversationType.PRIVATE.getName(),"false")
+        // 表示支持单聊会话, false 表示不聚合显示, true 则为聚合显示
+        Uri uri = Uri.parse("rong://" +
+                this.getActivity().getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlst")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
+                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "true")//公共服务号
+                .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "true")//订阅号
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                .build();
+
+        conversationListFragment.setUri(uri);
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.container, conversationListFragment);
+        transaction.commit();
+
+
     }
 }

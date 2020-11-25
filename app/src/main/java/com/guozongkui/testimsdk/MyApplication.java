@@ -132,6 +132,7 @@ public class MyApplication extends Application {
             @Override
             public Message onSend(Message message) {
 
+                Log.d(TAG, "onSend: ");
 //                return null;  返回null就被拦截了
 
                 return message;
