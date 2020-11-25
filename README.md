@@ -1,2 +1,2 @@
 # RongIMDemo
-A demo to integrating Rongcloud IM SDK
+A demo for practicing functions in Rongcloud IM SDK
